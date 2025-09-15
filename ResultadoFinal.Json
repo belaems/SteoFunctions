@@ -1,37 +1,3 @@
-# SteoFunctions
-Segundo desafio do Bootcamp Code Girls consistem em utilizar o Step Functions da AWS e mapear o passo a passo da utilização do mesmo
-
-Passo a Passo – Utilização do AWS Step Functions
-Na página Orquestração de fluxos de trabalho com tecnologia sem servidor | AWS Step Functions | Amazon Web Services você encontra uma explicação detalhada sobre o que é o Step Functions, como funciona, seus benefícios, casos de uso e serviços relacionados.
-Abaixo, segue um resumo simplificado para quem não é familiarizado com o serviço.
-O que é o Step Functions
-O AWS Step Functions é um serviço de fluxo de trabalho visual que ajuda os desenvolvedores a usar os serviços da AWS para criar aplicações distribuídas, automatizar processos, orquestrar microsserviços e criar pipelines de dados e machine learning (ML).
-Como funciona (resumido)
-1.	Definição do fluxo: Crie seu fluxo de trabalho de forma visual no Workflow Studio ou por código, no console ou no VS Code.
-2.	Configuração dos recursos: Especifique quais serviços (ex.: AWS Lambda, Amazon SNS) serão acionados em cada etapa.
-3.	Execução e teste: Inicie a execução, acompanhe as etapas em tempo real e depure falhas diretamente no console.
-Benefícios e Atributos
-•	Tratamento de erros automático
-•	Histórico detalhado de execução
-•	Escalabilidade automática
-•	Alta disponibilidade
-•	Pagamento sob demanda
-•	Segurança integrada
-
-AWS Step Functions – Comece a usar
-1.	Apos o login acesse a pagina Step Functions | us-east-2
- ![alt text](PaginaInicial.png)
-2.	Crie seu fluxo do zero
- ![alt text](CrieFluxo.png)
-3.	Crie a máquina de estado informando:
-Nome da máquina: desafioDIO
-Tipo: Padrão
- 
-![alt text](Padrao.png)
-Conforme a arquitetura definida no desafio anterior (e-commerce) arraste os itens necessários para montar o fluxo.
- ![alt text](Pagina.png)
-
-Resultado final JSON:
 {
   "Comment": "Fluxo de compra e-commerce com SQS, SNS, Lambda e S3",
   "StartAt": "ReceberPedido",
@@ -166,20 +132,3 @@ Resultado final JSON:
     }
   }
 }
-
- ![alt text](image.png)
-O que esse fluxo faz
-1.	ReceberPedido → envia para SQS.
-2.	ValidarPedido (Lambda) → verifica se o pedido é válido.
-3.	PedidoAprovado? → decisão (Choice).
-o	Se não aprovado → envia SNS de falha.
-o	Se aprovado → continua.
-4.	ProcessarPagamento (Lambda) → chama gateway de pagamento.
-5.	PagamentoAprovado? → decisão (Choice).
-o	Se não aprovado → envia SNS de falha.
-o	Se aprovado → continua.
-6.	IntegrarBackstage (Lambda) → envia info ao sistema interno.
-7.	GerarComprovanteS3 (Lambda) → gera arquivo/PDF, salva no S3 e retorna o link.
-8.	NotificarPedidoFinal (SNS) → envia mensagem ao cliente com o link do comprovante no S3.
-
-
